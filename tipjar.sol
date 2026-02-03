@@ -19,7 +19,7 @@ contract tips {
         return address(this).balance;
     }
 
-    // 3.1 Structure for a Waitress
+    // 3.1 Structure for  a Waitress
 
     struct Waitress {
         address payable walletAddress;
