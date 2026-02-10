@@ -11,10 +11,76 @@
 				"type": "constructor"
 			},
 			{
+				"inputs": [
+					{
+						"internalType": "address payable",
+						"name": "walletAddress",
+						"type": "address"
+					},
+					{
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "percent",
+						"type": "uint256"
+					}
+				],
+				"name": "addWaitress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
 				"inputs": [],
 				"name": "addtips",
 				"outputs": [],
 				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "walletAddress",
+						"type": "address"
+					}
+				],
+				"name": "removeWaitress",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "viewWaitress",
+				"outputs": [
+					{
+						"components": [
+							{
+								"internalType": "address payable",
+								"name": "walletAddress",
+								"type": "address"
+							},
+							{
+								"internalType": "string",
+								"name": "name",
+								"type": "string"
+							},
+							{
+								"internalType": "uint256",
+								"name": "percent",
+								"type": "uint256"
+							}
+						],
+						"internalType": "struct tips.Waitress[]",
+						"name": "",
+						"type": "tuple[]"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -59,11 +125,11 @@
 	},
 	"sources": {
 		"tipjar.sol": {
-			"keccak256": "0x127963f1fb42b8af8e3576761fddf6f13d996adfd8e59efd240cbef66b50c745",
+			"keccak256": "0x7adb879e77211284911249b7cb312735e41d8013d15714305322b3db1e0cce9c",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://0edadd70044303c584cc23d84a87143cece491349bf4301301fa346ce2b7dbdf",
-				"dweb:/ipfs/QmU6NntkxsCZ6usMqzxamLgKvwbCbm5qAmttGDdWg74WEA"
+				"bzz-raw://aebd30dae5b4a2f559eef1cd2bfa7ebe4b95f6dac34ff75a18fdd52525bde3ae",
+				"dweb:/ipfs/QmNXsyVg5h3MGc2cTLo7wrrigZ137KMjDUkagWUtJLp5vZ"
 			]
 		}
 	},
