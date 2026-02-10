@@ -41,6 +41,26 @@
 				"type": "function"
 			},
 			{
+				"inputs": [],
+				"name": "distributeBalance",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
 				"inputs": [
 					{
 						"internalType": "address",
@@ -125,11 +145,11 @@
 	},
 	"sources": {
 		"tipjar.sol": {
-			"keccak256": "0x7adb879e77211284911249b7cb312735e41d8013d15714305322b3db1e0cce9c",
+			"keccak256": "0x1a97ef813ec126eb926c7d76c36b352ba72b8841aba301dbbd83ef549429ee62",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://aebd30dae5b4a2f559eef1cd2bfa7ebe4b95f6dac34ff75a18fdd52525bde3ae",
-				"dweb:/ipfs/QmNXsyVg5h3MGc2cTLo7wrrigZ137KMjDUkagWUtJLp5vZ"
+				"bzz-raw://d863d6f0bc5eb057f2d198c69ff120106ff027e6de4a42f1dd7a3e05f62d148a",
+				"dweb:/ipfs/QmfPrqVvKnRpHAH5Rw9YMMBZaFC6rTJPGxyn7tiDzkgHkV"
 			]
 		}
 	},

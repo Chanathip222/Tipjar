@@ -1,43 +1,39 @@
 // SPDX-License-Identifier: MIT
-
 pragma solidity 0.8.31;
 
 contract tips {
-    address owner;
+    address public owner;
 
     constructor() {
         owner = msg.sender;
     }
 
     // 1. Put fund in smart contract
-
-    function addtips() public payable {}
+    function addtips() public payable {
+        require(msg.value > 0, "No ETH sent");
+    }
 
     // 2. View balance
-
     function viewtips() public view returns (uint) {
         return address(this).balance;
     }
 
-    // 3.1 Structure for  a Waitress
-
+    // 3. Structure for a Waitress
     struct Waitress {
         address payable walletAddress;
         string name;
         uint percent;
     }
 
-    Waitress[] waitress; // List of all waitresses
+    Waitress[] private waitress; // List of all waitresses
 
-    // 5. View waitress
-
+    // 4. View waitress
     function viewWaitress() public view returns (Waitress[] memory) {
         return waitress;
     }
 
     modifier onlyOwner() {
         require(msg.sender == owner, "Only owner can call");
-
         _;
     }
 
@@ -46,55 +42,54 @@ contract tips {
         string memory name,
         uint percent
     ) public onlyOwner {
+        require(percent > 0, "Percent must be > 0");
+
         bool waitressExist = false;
+        uint totalPercent = percent;
 
-        if (waitress.length >= 1) {
-            for (uint i = 0; i < waitress.length; i++) {
-                if (waitress[i].walletAddress == walletAddress) {
-                    waitressExist = true;
-                }
+        for (uint i = 0; i < waitress.length; i++) {
+            if (waitress[i].walletAddress == walletAddress) {
+                waitressExist = true;
             }
-        } // Check Logic
-
-        if (waitressExist == false) {
-            waitress.push(Waitress(walletAddress, name, percent));
+            totalPercent += waitress[i].percent;
         }
+
+        require(!waitressExist, "Waitress already exists");
+        require(totalPercent <= 100, "Total percent exceeds 100");
+
+        waitress.push(Waitress(walletAddress, name, percent));
     }
 
     function removeWaitress(address walletAddress) public onlyOwner {
-        if (waitress.length >= 1) {
-            for (uint i = 0; i < waitress.length; i++) {
-                if (waitress[i].walletAddress == walletAddress) {
-                    // Shift elements left
-
-                    for (uint j = i; j < waitress.length - 1; j++) {
-                        waitress[j] = waitress[j + 1];
-                    }
-
-                    waitress.pop();
-
-                    break;
+        for (uint i = 0; i < waitress.length; i++) {
+            if (waitress[i].walletAddress == walletAddress) {
+                for (uint j = i; j < waitress.length - 1; j++) {
+                    waitress[j] = waitress[j + 1];
                 }
+                waitress.pop();
+                break;
             }
         }
     }
 
-    // function distributeBalance() public {
-    //     require(address(this).balance > 0, "No Money");
+    // Internal transfer helper
+    function _transferFunds(address payable to, uint amount) internal {
+        require(amount > 0, "Amount is zero");
+        (bool success, ) = to.call{value: amount}("");
+        require(success, "Transfer failed");
+    }
 
-    //     if (waitress.length >= 1) {
-    //         uint totalamount = address(this).balance;
+    // 5. Distribute balance
+    function distributeBalance() public onlyOwner {
+        uint contractBalance = address(this).balance;
+        require(contractBalance > 0, "No money to distribute");
+        require(waitress.length > 0, "No waitresses");
 
-    //         for (uint j = 0; j < waitress.length; j++) {
-    //             // Calculate share
+        for (uint i = 0; i < waitress.length; i++) {
+            uint distributeAmount =
+                (contractBalance * waitress[i].percent) / 100;
 
-    //             uint distributeAmount = (totalamount * waitress[j].percent) /
-    //                 100;
-
-    //             // Send money
-
-    //             _transferFunds(waitress[j].walletAddress, distributeAmount);
-    //         }
-    //     }
-    // }
+            _transferFunds(waitress[i].walletAddress, distributeAmount);
+        }
+    }
 }
