@@ -42,7 +42,7 @@ contract tips {
         string memory name,
         uint percent
     ) public onlyOwner {
-        require(percent > 0, "Percent must be > 0");
+        require(percent <= 100, "Percent must not exceed 100");
 
         bool waitressExist = false;
         uint totalPercent = percent;
